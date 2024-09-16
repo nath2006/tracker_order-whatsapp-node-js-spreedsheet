@@ -1,0 +1,9 @@
+{
+    "intro": "*System Autorecord Order*",
+    "template.menu": "Ketik angka *{{number}}*\u0020: *{{menu}}*",
+    "menu.recordOrder":"💸\u0020Input Data Penjualan",
+    "menu.checkStock":"📦\u0020Check Stock",
+    "menu.back":"📲 Kembali ke Menu Utama",
+    "footer":"Semangat ayo, sampe punya vapestore & cafe! \nKudu jadi pengusaha!",
+    "formOrderProduct": "- Banyak Barang: \n- Pembayaran: \n"
+}
