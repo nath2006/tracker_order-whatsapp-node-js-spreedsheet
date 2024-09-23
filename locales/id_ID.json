@@ -4,6 +4,7 @@
     "menu.recordOrder":"💸\u0020Input Data Penjualan",
     "menu.checkStock":"📦\u0020Check Stock",
     "menu.back":"📲 Kembali ke Menu Utama",
-    "footer":"Semangat ayo, sampe punya vapestore & cafe! \nKudu jadi pengusaha!",
-    "formOrderProduct": "- Banyak Barang: \n- Pembayaran: \n"
+    "footer":"System Under Development",
+    "template.form":"*{{form}}*",
+    "form.OrderProduct":"Silakan Masukkan Data Dengan Format Seperti Dibawah:\n\n*Nama Porduk#Banyak Produk#Metode Pembayaran*"
 }

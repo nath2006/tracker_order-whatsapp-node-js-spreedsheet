@@ -1,26 +1,29 @@
-function doGet() {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = sheet.getDataRange().getValues();
+function doPost(e) {
+  // Buka Google Sheet dengan ID Spreadsheet
+  let sheet = SpreadsheetApp.openById("1wqke6HiBN8a-MWo7xYemuh3BWgrPhP7mNf7kN2Wm43k").getActiveSheet();
+  
+  // Ambil data dari request POST
+  let data = JSON.parse(e.postData.contents);
 
-  var jsonData = [];
-  var headers = data[0];
-
-  for (var i = 1; i < data.length; i++) {
-    var row = {};
-    for (var j = 0; j < headers.length; j++) {
-      row[headers[j]] = data[i][j];
-    }
-    jsonData.push(row);
-  }
-
-  const response = {
-    success: true,
-    message: "Sukses menampilkan data",
-    data: jsonData
-  }
-
-  console.log(response)
-
-  return ContentService.createTextOutput(JSON.stringify(response))
-    .setMimeType(ContentService.MimeType.JSON);
+  // Ambil tanggal sekarang
+  let tanggal = new Date();
+  
+  // Membuat kode transaksi dengan format: C-[BANYAK BARANG] [TANGGAL] [BULAN] [TAHUN]
+  let tanggalTransaksi = String(tanggal.getDate()).padStart(2, '0');  // Tanggal 2 digit
+  let bulanTransaksi = String(tanggal.getMonth() + 1).padStart(2, '0'); // Bulan 2 digit, tambah 1 karena getMonth() dimulai dari 0
+  let tahunTransaksi = tanggal.getFullYear(); // Tahun 4 digit
+  let kodeTransaksi = `C-${data.banyakBarang} ${tanggalTransaksi}${bulanTransaksi}${tahunTransaksi}`;
+  
+  // Masukkan data ke baris baru di Sheet
+  sheet.appendRow([tanggal, 
+                   kodeTransaksi,    // Kode Transaksi otomatis
+                   data.namaProduk, 
+                   data.banyakBarang, 
+                   data.metodePembayaran, 
+                   data.namaPelanggan, 
+                   data.nomorHandphone]);
+                   
+  // Response JSON sukses
+  return ContentService.createTextOutput(JSON.stringify({ "result": "Data Transaksi Sukses Terupload" }))
+                        .setMimeType(ContentService.MimeType.JSON);
 }
