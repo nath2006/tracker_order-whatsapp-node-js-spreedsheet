@@ -5,7 +5,6 @@ const f = require("../utils/Formatter");
 
 module.exports = class BotController extends Controller {
 
-  //Introduction Menu
     async introduction(request) {
       return Response.menu.fromArrayOfString(
         [
@@ -23,14 +22,13 @@ module.exports = class BotController extends Controller {
 
     async input(request) {
       const key = request.text;
-      console.log(`Received key: ${key}`); // Tambahkan log ini untuk debugging
+      console.log(`Received key: ${key}`); 
       const isAllowed = await this.checkKey(key);
       if (isAllowed) {
         await this.setState("inputIn");
         await this.reply(f("form.OrderProduct"));
         return this.reply('key is valid');
       }
-      // await this.reply(f("formOrderProduct"))
       await this.reply(f("form.OrderProduct"));
       return this.setState("inputIn");
     }
@@ -68,40 +66,23 @@ module.exports = class BotController extends Controller {
     
 
     async checkStock(request) {
-      return this.getStock(request);
-    }
-
-
-    async getStock(request) {
-      const key = request.text;
-      console.log(`Received key: ${key}`); 
-      const isAllowed = await this.checkGetKey(key);
-      if (isAllowed) {
-        await this.setState("inputIn");
-        await this.reply('Mengambil Data ke Server, Mohon Tunggu!')
-        return this.reply('key is valid');
-      }
-      await this.reply('Mengambil Data ke Server, Mohon Tunggu!')
-      return this.setState("getIn");
-    }
-
-    async checkGetKey(key){
-      key === '2';
+      return this.displayStock(request);
     }
 
     async displayStock(request) {
-      try{
-        const response = await getData();
+      try {
+        const responsePromise = getData(); 
+        await this.reply('Mengambil data stok, harap tunggu sebentar...');
+        const response = await responsePromise;
         const stock = response.stok;
-        await this.reply(`Stock Barang Ada : ${stock[0][0]}`);
-        console.log(response);
-      }catch(error){
+        await this.reply(`Stock Barang Ada: ${stock[0][0]}`);
+      } catch (error) {
         await this.reply(`Terjadi kesalahan: ${error.message}`);
       }
       await this.setState(null); 
       return this.sendBasicMenu();
     }
-
+    
 
 
     async sendBasicMenu(request) {

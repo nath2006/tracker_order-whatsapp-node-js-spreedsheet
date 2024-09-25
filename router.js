@@ -8,7 +8,7 @@ const router = new Router();
 router.menu(f("menu.recordOrder"), [BotController, "recordOrder"]);
 router.menu(f("menu.checkStock"), [BotController, "checkStock"]);
 router.state("inputIn", [BotController, "handleInput"]);
-router.state("getIn", [BotController, "displayStock"]);
+// router.state("getIn", [BotController, "displayStock"]);
 router.keyword("*", [BotController, "introduction"]);
 
 module.exports = router;
