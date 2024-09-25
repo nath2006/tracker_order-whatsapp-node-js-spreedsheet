@@ -1,9 +1,11 @@
 const { Controller, Response } = require("pepesan");
-const {postData} = require("../service/gsheet")
+const {postData,getData} = require("../service/gsheet")
 const f = require("../utils/Formatter");
 
 
 module.exports = class BotController extends Controller {
+
+  //Introduction Menu
     async introduction(request) {
       return Response.menu.fromArrayOfString(
         [
@@ -51,8 +53,6 @@ module.exports = class BotController extends Controller {
         banyakBarang,
         metodePembayaran
       };
-    
-      console.log(data);
 
       try {
         const response = await postData(data);
@@ -62,16 +62,46 @@ module.exports = class BotController extends Controller {
         await this.reply(`Terjadi kesalahan: ${error.message}`);
       }
     
-      await this.setState(null); // Reset state setelah menerima input
+      await this.setState(null); 
       return this.sendBasicMenu()
     }
     
 
     async checkStock(request) {
-      await this.reply("Stock Sisa : 5")
-      await this.reply(f("footer"))
-      return this.sendBasicMenu()
+      return this.getStock(request);
     }
+
+
+    async getStock(request) {
+      const key = request.text;
+      console.log(`Received key: ${key}`); 
+      const isAllowed = await this.checkGetKey(key);
+      if (isAllowed) {
+        await this.setState("inputIn");
+        await this.reply('Mengambil Data ke Server, Mohon Tunggu!')
+        return this.reply('key is valid');
+      }
+      await this.reply('Mengambil Data ke Server, Mohon Tunggu!')
+      return this.setState("getIn");
+    }
+
+    async checkGetKey(key){
+      key === '2';
+    }
+
+    async displayStock(request) {
+      try{
+        const response = await getData();
+        const stock = response.stok;
+        await this.reply(`Stock Barang Ada : ${stock[0][0]}`);
+        console.log(response);
+      }catch(error){
+        await this.reply(`Terjadi kesalahan: ${error.message}`);
+      }
+      await this.setState(null); 
+      return this.sendBasicMenu();
+    }
+
 
 
     async sendBasicMenu(request) {

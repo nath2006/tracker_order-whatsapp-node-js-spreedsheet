@@ -1,0 +1,12 @@
+function doGet(e) {
+  // Buka Google Sheet dengan ID Spreadsheet
+  let sheet = SpreadsheetApp.openById("1wqke6HiBN8a-MWo7xYemuh3BWgrPhP7mNf7kN2Wm43k").getSheetByName("Record_Stock_Otomatis");
+  
+  // Ambil data dari kolom stok
+  let stokRange = sheet.getRange("B5");  // Sesuaikan range sesuai kebutuhan
+  let stokValues = stokRange.getValues();
+  
+  // Response JSON dengan data stok
+  return ContentService.createTextOutput(JSON.stringify({ "stok": stokValues }))
+                        .setMimeType(ContentService.MimeType.JSON);
+}
