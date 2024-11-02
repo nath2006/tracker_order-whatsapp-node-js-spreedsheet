@@ -43,7 +43,7 @@ module.exports = class BotController extends Controller {
       console.log()
     
       if (!namaProduk || !banyakBarang || !metodePembayaran) {
-        return this.reply('Format input tidak valid. Harap masukkan data dengan format: Nama Porduk#Banyak Produk#Metode');
+        return this.reply('Format input tidak valid. Harap masukkan data dengan format: Nama Produk#Banyak Produk#Metode Pembayaran#Nama Pelangan#Nomor Telpon');
       }
     
       const data = {

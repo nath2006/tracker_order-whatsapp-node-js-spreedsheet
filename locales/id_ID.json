@@ -5,5 +5,5 @@
     "menu.checkStock":"📦\u0020Check Stock",
     "menu.back":"📲 Kembali ke Menu Utama",
     "template.form":"*{{form}}*",
-    "form.OrderProduct":"Silakan Masukkan Data Dengan Format Seperti Dibawah:\n\n*Nama Porduk#Banyak Produk#Metode Pembayaran*"
+    "form.OrderProduct":"Silakan Masukkan Data Dengan Format Seperti Dibawah:\n\n*Nama Produk#Banyak Produk#Metode Pembayaran#Nama Pelangan#Nomor Telpon*"
 }
